@@ -45,6 +45,10 @@ class HelloWorldIT {
     sqsQueueUtil.purgeQueue(helloWorldProps.getQueueName());
   }
 
+  /**
+   * Sends a message the the queue and verifies that the api requests were made - the first is a
+   * connection reset response, the 2nd is triggered by JMS retry and is successful
+   */
   @Test
   @SneakyThrows
   void test() {
@@ -55,11 +59,14 @@ class HelloWorldIT {
     List<ServeEvent> serveEvents = WireMock.getAllServeEvents();
     assertThat(serveEvents).hasSize(2);
 
+    // zero-indexed by latest request, event 0 will be the successful retry against the hello-world
+    // endpoint
     ServeEvent successEvent = serveEvents.get(0);
     assertThat(successEvent.getRequest().getUrl()).isEqualTo("/hello-world");
     assertThat(successEvent.getResponse().getStatus()).isEqualTo(200);
     assertThat(successEvent.getResponse().getBodyAsString()).contains("success");
 
+    // the first request was a connection reset response
     ServeEvent failingEvent = serveEvents.get(1);
     assertThat(failingEvent.getRequest().getUrl()).isEqualTo("/hello-world");
     assertThat(failingEvent.getResponse().getStatus()).isEqualTo(500);
