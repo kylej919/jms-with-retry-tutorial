@@ -1,5 +1,6 @@
 package com.kylej.jmsretrytutorial;
 
+import static com.kylej.jmsretrytutorial.api.HelloWorldAPI.HELLO_WORLD_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -62,13 +63,13 @@ class HelloWorldIT {
     // zero-indexed by latest request, event 0 will be the successful retry against the hello-world
     // endpoint
     ServeEvent successEvent = serveEvents.get(0);
-    assertThat(successEvent.getRequest().getUrl()).isEqualTo("/hello-world");
+    assertThat(successEvent.getRequest().getUrl()).isEqualTo(HELLO_WORLD_PATH);
     assertThat(successEvent.getResponse().getStatus()).isEqualTo(200);
     assertThat(successEvent.getResponse().getBodyAsString()).contains("success");
 
     // the first request was a connection reset response
     ServeEvent failingEvent = serveEvents.get(1);
-    assertThat(failingEvent.getRequest().getUrl()).isEqualTo("/hello-world");
+    assertThat(failingEvent.getRequest().getUrl()).isEqualTo(HELLO_WORLD_PATH);
     assertThat(failingEvent.getResponse().getStatus()).isEqualTo(500);
     failingEvent.getResponse().getBodyAsString().contains("success");
     assertThat(failingEvent.getResponse().getFault()).isEqualTo(Fault.CONNECTION_RESET_BY_PEER);
