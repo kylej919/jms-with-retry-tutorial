@@ -1,0 +1,4 @@
+
+hello-world-props:
+  queue-name: hello-world-queue
+  url: http://localhost:8444

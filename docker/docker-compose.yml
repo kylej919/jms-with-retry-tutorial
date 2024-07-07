@@ -1,0 +1,22 @@
+services:
+  localstack:
+    container_name: "demo-localstack"
+    image: localstack/localstack:3.5.0
+    build:
+      context: .
+      dockerfile: docker/localstack/Dockerfile
+    ports:
+      - "127.0.0.1:4566:4566"
+    volumes:
+      - ./localstack:/etc/localstack/init/ready.d # ready hook
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-west-2
+
+  wiremock:
+    container_name: "demo-wiremock"
+    image: wiremock/wiremock:3.8.0
+    ports:
+      - 8444:8080
+    volumes:
+      - ./wiremock/home:/home/wiremock

@@ -1,0 +1,30 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "hello_world_scenario",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "Succeed on Retry",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/hello-world"
+      },
+      "response": {
+        "status": 500,
+        "fault": "CONNECTION_RESET_BY_PEER"
+      }
+    },
+    {
+      "scenarioName": "hello_world_scenario",
+      "requiredScenarioState": "Succeed on Retry",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/hello-world"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "hello-world-success-response.json"
+      }
+    }
+  ]
+}

@@ -1,13 +1,13 @@
-package com.kylej.jms_retry_tutorial;
+package com.kylej.jmsretrytutorial;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JmsRetryTutorialApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JmsRetryTutorialApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
