@@ -74,6 +74,7 @@ class HelloWorldIT {
     failingEvent.getResponse().getBodyAsString().contains("success");
     assertThat(failingEvent.getResponse().getFault()).isEqualTo(Fault.CONNECTION_RESET_BY_PEER);
   }
+  
 
   @AfterEach
   void cleanUp() {
