@@ -29,7 +29,6 @@ public class SqsQueueUtil {
                         .attributeNames(APPROXIMATE_NUMBER_OF_MESSAGES,
                                 APPROXIMATE_NUMBER_OF_MESSAGES_NOT_VISIBLE)
                         .build());
-        log.info("checking if message to be removed from the queue");
         return Integer.parseInt(numMessages.attributes().get(APPROXIMATE_NUMBER_OF_MESSAGES_NOT_VISIBLE))
                 + Integer.parseInt(numMessages.attributes().get(APPROXIMATE_NUMBER_OF_MESSAGES));
     }
@@ -40,5 +39,6 @@ public class SqsQueueUtil {
         sqsClient.purgeQueue(PurgeQueueRequest.builder().queueUrl(queueUrl).build());
 
         await().until(() -> getInflightMessages(name) == 0);
+        log.info("Queue {} successfully purged", name);
     }
 }
